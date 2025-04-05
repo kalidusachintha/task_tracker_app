@@ -16,7 +16,7 @@ const formatStatus = (status) => {
 </script>
 
 <template>
-  <div class="py-4 px-6 hover:bg-gray-50 transition-colors">
+  <div class="py-4 px-6 hover:bg-gray-200 transition-colors justify-between">
     <div class="flex justify-between">
       <div class="flex-1">
         <div class="flex items-center">

@@ -25,10 +25,16 @@ export const useTaskStore = defineStore('taskStore', () => {
     task.value = []
   }
   const fetchTasks = async () => {
+    if (loading.value) return;
+
+    loading.value = true
     try {
       tasks.value = await TaskService.getTasks();
     } catch (error) {
       console.log(error)
+    }
+    finally {
+      loading.value = false
     }
   };
 

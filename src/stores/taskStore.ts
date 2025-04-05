@@ -8,6 +8,7 @@ export const useTaskStore = defineStore('taskStore', () => {
   const task = ref<Task[]>([]);
   const router = useRouter();
   const errors = ref({});
+  const deletingItem = ref(0);
   const loading = ref(false);
   const form = ref({
     title: '',
@@ -66,7 +67,6 @@ export const useTaskStore = defineStore('taskStore', () => {
   };
 
   const updateTask = async () => {
-    console.log(task)
     if (loading.value) return;
 
     loading.value = true
@@ -84,11 +84,16 @@ export const useTaskStore = defineStore('taskStore', () => {
     }
   };
   const deleteTask = async (id: number) => {
+    if (loading.value) return;
+
+    deletingItem.value = id;
     try {
       await TaskService.deleteTask(id);
       await fetchTasks()
     } catch (error) {
       console.log(error)
+    } finally {
+      deletingItem.value = 0
     }
   };
 
@@ -103,6 +108,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     resetForm,
     getTask,
     task,
-    updateTask
+    updateTask,
+    deletingItem
   };
 });

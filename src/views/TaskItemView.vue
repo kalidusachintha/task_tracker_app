@@ -2,17 +2,16 @@
 import { useTaskStore } from '@/stores/taskStore.ts'
 import type { Task } from '@/types/Task.ts'
 import IconSpinner from '@/components/IconSpinner.vue'
+import useUtility from '@/composables/utility.ts'
 
 const taskStore = useTaskStore()
+const { formatStatus } = useUtility()
+
 const props = defineProps<{  task: Task , isDeleting: boolean}>()
 
 const deleteTask = () => {
   taskStore.deleteTask(props.task.id)
 }
-
-const formatStatus = (status) => {
-  return status?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-};
 </script>
 
 <template>

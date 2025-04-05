@@ -5,10 +5,12 @@ import { useStatusStore } from '@/stores/statusStore.ts'
 import { onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ButtonUtility from '@/components/ButtonUtility.vue'
+import useUtility from '@/composables/utility.ts'
 
 const route = useRoute();
 const taskStore = useTaskStore()
 const statusStore = useStatusStore()
+const { formatStatus } = useUtility()
 
 onMounted( () => {
   taskStore.getTask(+route.params.id)
@@ -55,12 +57,12 @@ onUnmounted(() =>{
           Status
         </label>
         <select
-          id="task.status"
+          id="status"
           v-model="taskStore.task.task_status_id"
           class="cw-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
           <option value="" selected></option>
           <option v-for="status in statusStore.statuses" :key="status.id" :value="status.id">
-            {{ status.name }}
+            {{ formatStatus(status.name) }}
           </option>
         </select>
       </div>

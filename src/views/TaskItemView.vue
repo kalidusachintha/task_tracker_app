@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTaskStore } from '@/stores/taskStore.ts'
-import type { Task } from '@/types/Task'
+import type { Task } from '@/types/Task.ts'
 import IconSpinner from '@/components/IconSpinner.vue'
 
 const taskStore = useTaskStore()

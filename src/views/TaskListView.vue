@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useTaskStore } from '@/stores/taskStore.ts'
-import TaskItem from '@/components/TaskItem.vue'
+import TaskItemView from '@/views/TaskItemView.vue'
 
 const taskStore = useTaskStore()
 
@@ -16,7 +16,7 @@ onMounted(() => {
       <h2 class="text-xl font-semibold text-gray-800">Your Tasks</h2>
     </div>
     <div class="bg-white rounded-xl shadow-md overflow-hidden">
-      <TaskItem
+      <TaskItemView
         v-for="task in taskStore.tasks"
         :key="task.id"
         :task="task"

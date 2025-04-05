@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TaskList from '@/views/TaskList.vue'
+import TaskListView from '@/views/TaskListView.vue'
 import TaskCreateView from '@/views/TaskCreateView.vue'
 import TaskEditView from '@/views/TaskEditView.vue'
 
@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'task.list',
-      component: TaskList,
+      component: TaskListView,
     },
     {
       path: '/task/create',

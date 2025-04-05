@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue'
-import TaskService from '@/services/TaskService.ts'
 import type { Task } from '@/types/Task.ts'
 import { useRouter } from "vue-router";
+import useTask from '@/composables/services/TaskService.ts'
 export const useTaskStore = defineStore('taskStore', () => {
   const tasks = ref<Task[]>([]);
   const task = ref<Task[]>([]);
-  const router = useRouter();
   const errors = ref({});
   const deletingItem = ref(0);
   const loading = ref(false);
@@ -15,6 +14,8 @@ export const useTaskStore = defineStore('taskStore', () => {
     description: '',
     task_status_id: ''
   })
+  const router = useRouter();
+  const { getTasks, createTask, getTaskById, updateTaskById, deleteTaskById} = useTask()
 
   const resetForm = () => {
     form.value.title = "";
@@ -29,7 +30,7 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     loading.value = true
     try {
-      tasks.value = await TaskService.getTasks();
+      tasks.value = await getTasks();
     } catch (error) {
       console.log(error)
     }
@@ -45,7 +46,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors.value = {}
 
     try {
-      await TaskService.createTask(form.value);
+      await createTask(form.value);
       await fetchTasks()
       router.push({ name: 'task.list' })
     } catch (error: any) {
@@ -64,7 +65,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors.value = {}
 
     try {
-      task.value = await TaskService.getTask(id);
+      task.value = await getTaskById(id);
     } catch (error: any) {
       console.log(error)
     } finally {
@@ -79,7 +80,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors.value = {}
 
     try {
-      await TaskService.updateTask(task.value);
+      await updateTaskById(task.value);
       await fetchTasks()
       router.push({ name: 'task.list' })
     } catch (error: any) {
@@ -95,7 +96,7 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     deletingItem.value = id;
     try {
-      await TaskService.deleteTask(id);
+      await deleteTaskById(id);
       await fetchTasks()
     } catch (error) {
       console.log(error)

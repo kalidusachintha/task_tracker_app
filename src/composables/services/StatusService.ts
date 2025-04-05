@@ -2,14 +2,14 @@ import axios from 'axios';
 
 const API_URL = 'statuses';
 
-export default {
-  async getAllStatuses() {
-    try {
+export default function useStatus(){
+  const getAll = async () => {
       const response = await axios.get(API_URL);
-      return response.data.data;
-    } catch (error) {
-      console.log(error)
-    }
 
-  },
+      return response.data.data;
+  }
+
+  return {
+    getAll
+  }
 };

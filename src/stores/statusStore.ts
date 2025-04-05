@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import StatusService from '@/services/StatusService.ts'
+import useStatus from '@/composables/services/StatusService.ts'
 
 export const useStatusStore = defineStore('statusStore', ()=> {
 
   const statuses = ref([])
+  const { getAll } = useStatus()
 
   const getAllStatuses = async () => {
 
     try {
-      statuses.value = await StatusService.getAllStatuses();
+      statuses.value = await getAll();
     } catch (error) {
       console.log(error)
     }

@@ -45,8 +45,8 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors.value = {}
 
     try {
-      const newTask = await TaskService.createTask(form.value);
-      tasks.value.push(newTask);
+      await TaskService.createTask(form.value);
+      await fetchTasks()
       router.push({ name: 'task.list' })
     } catch (error: any) {
       if (error?.response.status === 422) {
@@ -80,6 +80,7 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     try {
       await TaskService.updateTask(task.value);
+      await fetchTasks()
       router.push({ name: 'task.list' })
     } catch (error: any) {
       if (error?.response.status === 422) {

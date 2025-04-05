@@ -39,7 +39,8 @@ onUnmounted(() => {
         <label for="description" class="block text-sm font-medium text-gray-700 mb-1"
           >Description</label
         >
-        <input
+        <textarea
+          rows="10"
           v-model="taskStore.form.description"
           id="description"
           name="description"
@@ -65,7 +66,7 @@ onUnmounted(() => {
       <div class="flex space-x-4 pt-4">
         <ButtonUtility :loading="taskStore.loading"> Save </ButtonUtility>
         <RouterLink
-          :to="{ name: 'task.list' }"
+          :to="taskStore.loading ? {} : { name: 'task.list' }"
           class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition-colors"
         >
           Cancel

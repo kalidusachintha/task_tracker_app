@@ -15,7 +15,9 @@ const deleteTask = () => {
 </script>
 
 <template>
-  <div class="py-4 px-6 hover:bg-gray-200 transition-colors justify-between">
+  <div
+    class="py-4 px-6 hover:bg-gray-200 transition-colors justify-between rounded-lg shadow-sm border border-gray-200"
+  >
     <div class="flex justify-between">
       <div class="flex-1">
         <div class="flex items-center">

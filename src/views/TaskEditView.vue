@@ -24,13 +24,13 @@ onUnmounted(() =>{
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold text-gray-800 mb-6">Update Task - {{ taskStore.task.title }}</h1>
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Update Task - {{ taskStore.form.title }}</h1>
   <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
-    <form @submit.prevent="taskStore.updateTask(task)" novalidate class="space-y-4">
+    <form @submit.prevent="taskStore.updateTask" novalidate class="space-y-4">
       <div>
         <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
         <input
-          v-model="taskStore.task.title"
+          v-model="taskStore.form.title"
           id="title"
           name="title"
           type="text"
@@ -43,7 +43,7 @@ onUnmounted(() =>{
       <div>
         <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
         <input
-          v-model="taskStore.task.description"
+          v-model="taskStore.form.description"
           id="description"
           name="description"
           type="text"
@@ -58,7 +58,7 @@ onUnmounted(() =>{
         </label>
         <select
           id="status"
-          v-model="taskStore.task.task_status_id"
+          v-model="taskStore.form.task_status_id"
           class="cw-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
           <option value="" selected></option>
           <option v-for="status in statusStore.statuses" :key="status.id" :value="status.id">

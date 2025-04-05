@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { TaskFormData,} from '@/types/Task.ts'
 
 const API_URL = 'tasks';
 
@@ -9,7 +10,7 @@ export default function useTask(){
       return response.data.data;
   }
 
-  const createTask = async (task:any) => {
+  const createTask = async (task:TaskFormData) => {
       const response = await axios.post(API_URL, task);
 
       return response.data;
@@ -20,7 +21,7 @@ export default function useTask(){
 
       return response.data.data;
   }
-  const updateTaskById = async (task:any) =>{
+  const updateTaskById = async (task:TaskFormData) =>{
       const response = await axios.put(`${API_URL}/${task.id}`, task);
 
       return response.data.data;

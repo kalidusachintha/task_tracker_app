@@ -1,18 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue'
-import type { Task } from '@/types/Task.ts'
+import type { Task, TaskFormData } from '@/types/Task.ts'
 import { useRouter } from "vue-router";
 import useTask from '@/composables/services/TaskService.ts'
 export const useTaskStore = defineStore('taskStore', () => {
   const tasks = ref<Task[]>([]);
-  const task = ref<Task[]>([]);
   const errors = ref({});
   const deletingItem = ref(0);
   const loading = ref(false);
-  const form = ref({
+  const form = ref<TaskFormData>({
     title: '',
     description: '',
-    task_status_id: ''
+    task_status_id: null
   })
   const router = useRouter();
   const { getTasks, createTask, getTaskById, updateTaskById, deleteTaskById} = useTask()
@@ -20,10 +19,9 @@ export const useTaskStore = defineStore('taskStore', () => {
   const resetForm = () => {
     form.value.title = "";
     form.value.description = "";
-    form.value.task_status_id = ""
+    form.value.task_status_id = null
 
     errors.value = {};
-    task.value = []
   }
   const fetchTasks = async () => {
     if (loading.value) return;
@@ -65,7 +63,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors.value = {}
 
     try {
-      task.value = await getTaskById(id);
+      form.value = await getTaskById(id);
     } catch (error: any) {
       console.log(error)
     } finally {
@@ -80,7 +78,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors.value = {}
 
     try {
-      await updateTaskById(task.value);
+      await updateTaskById(form.value);
       await fetchTasks()
       router.push({ name: 'task.list' })
     } catch (error: any) {
@@ -115,7 +113,6 @@ export const useTaskStore = defineStore('taskStore', () => {
     errors,
     resetForm,
     getTask,
-    task,
     updateTask,
     deletingItem
   };

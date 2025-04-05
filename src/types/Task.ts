@@ -1,11 +1,21 @@
 export interface Task  {
-  id: number;
+  id?: number;
   title: string;
   description: string;
-  status: Status;
+  status?: string;
+  task_status_id?: number| null,
+  code?: string
   createdAt?: string;
 }
-interface Status {
+
+export type TaskFormData = {
+  id?: number;
+  title: string;
+  description: string;
+  task_status_id?: number | null;
+};
+
+export interface Status {
   id: number;
   name: string;
   code: string;

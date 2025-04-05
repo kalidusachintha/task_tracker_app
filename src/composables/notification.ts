@@ -1,9 +1,7 @@
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 import type NotificationOptions from '@/types/Notification.ts'
 
-
 export default function useNotification() {
-
   const toast = (options: NotificationOptions) => {
     return Swal.fire({
       position: options.position || 'top-end',
@@ -12,28 +10,28 @@ export default function useNotification() {
       text: options.text,
       showConfirmButton: options.showConfirmButton || false,
       showCancelButton: options.showCancelButton || false,
-      timer: options.timer || 1500
-    });
-  };
+      timer: options.timer || 1500,
+    })
+  }
 
-  const success = (title: string, text?: string, timer? :number) => {
+  const success = (title: string, text?: string, timer?: number) => {
     return toast({
       icon: 'success',
       title,
       text,
       timer,
-      position: 'center'
-    });
-  };
+      position: 'center',
+    })
+  }
 
   const error = (title: string, text?: string, timer = 1500) => {
     return toast({
       icon: 'error',
       title,
       text,
-      timer
-    });
-  };
+      timer,
+    })
+  }
 
   const confirm = (options: NotificationOptions) => {
     return Swal.fire({
@@ -46,14 +44,13 @@ export default function useNotification() {
       cancelButtonText: options.cancelButtonText || 'No',
       confirmButtonColor: options.confirmButtonColor || '#ef4444',
       timerProgressBar: options.timerProgressBar || true,
-      reverseButtons: options.reverseButtons || true
-    });
-  };
+      reverseButtons: options.reverseButtons || true,
+    })
+  }
   return {
     toast,
     confirm,
     success,
-    error
+    error,
   }
-
 }

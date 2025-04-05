@@ -17,7 +17,7 @@ export const useTaskStore = defineStore('taskStore', () => {
 
   const router = useRouter()
   const { getTasks, createTask, getTaskById, updateTaskById, deleteTaskById } = useTask()
-  const { confirm,success, error} = useNotification()
+  const { confirm, success, error } = useNotification()
 
   const resetForm = () => {
     form.value.title = ''
@@ -32,8 +32,8 @@ export const useTaskStore = defineStore('taskStore', () => {
     loading.value = true
     try {
       tasks.value = await getTasks()
-    } catch (exception:any) {
-      error('Oops!','There was something issue')
+    } catch (exception: any) {
+      error('Oops!', 'There was something issue')
     } finally {
       loading.value = false
     }
@@ -53,7 +53,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     } catch (exception: any) {
       if (exception?.response.status === 422) {
         errors.value = exception.response.data.errors
-        error('Oops!','There was something issue')
+        error('Oops!', 'There was something issue')
       }
     } finally {
       loading.value = false
@@ -69,7 +69,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     try {
       form.value = await getTaskById(id)
     } catch (exception: any) {
-      error('Oops!','There was something issue')
+      error('Oops!', 'There was something issue')
     } finally {
       loading.value = false
     }
@@ -89,7 +89,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     } catch (exception: any) {
       if (exception?.response.status === 422) {
         errors.value = exception.response.data.errors
-        error('Oops!','There was something issue')
+        error('Oops!', 'There was something issue')
       }
     } finally {
       loading.value = false
@@ -98,25 +98,24 @@ export const useTaskStore = defineStore('taskStore', () => {
   const deleteTask = async (id: number) => {
     confirm({
       title: 'Are you sure?',
-      text: 'You won\'t be able to revert this action!',
+      text: "You won't be able to revert this action!",
       icon: 'warning',
-    })
-      .then(async result => {
-        if (result.isConfirmed) {
-          if (loading.value) return
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        if (loading.value) return
 
-          deletingItem.value = id
-          try {
-            await deleteTaskById(id)
-            await fetchTasks()
-            success('Task deleted successfully')
-          } catch (exception:any) {
-            error('Oops!','There was something issue')
-          } finally {
-            deletingItem.value = 0
-          }
+        deletingItem.value = id
+        try {
+          await deleteTaskById(id)
+          await fetchTasks()
+          success('Task deleted successfully')
+        } catch (exception: any) {
+          error('Oops!', 'There was something issue')
+        } finally {
+          deletingItem.value = 0
         }
-      })
+      }
+    })
   }
 
   return {

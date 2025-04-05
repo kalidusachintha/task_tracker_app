@@ -23,7 +23,10 @@ onMounted(() => {
         :task="task"
         :isDeleting="taskStore.deletingItem == task.id"
       />
-      <div v-if="taskStore.tasks.length === 0" class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
+      <div
+        v-if="taskStore.tasks.length === 0"
+        class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center"
+      >
         <IconSpinner v-if="taskStore.loading"> Loading..</IconSpinner>
         <p class="text-gray-600" v-else>You have no tasks yet. Create one to get started!</p>
       </div>
@@ -31,6 +34,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

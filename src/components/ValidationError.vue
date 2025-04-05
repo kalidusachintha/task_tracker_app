@@ -1,10 +1,8 @@
 <script setup lang="ts">
-
 const props = defineProps<{
-  errors: Record<string, string[]>,
+  errors: Record<string, string[]>
   field: string
 }>()
-
 </script>
 
 <template>
@@ -17,6 +15,3 @@ const props = defineProps<{
     </li>
   </ul>
 </template>
-
-
-

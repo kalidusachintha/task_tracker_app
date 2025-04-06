@@ -11,12 +11,26 @@ describe('Test task service composable', () => {
   })
 
   it('getTasks returns tasks list', async () => {
-    const mockTasks:Task[] = [
-      { id: 1, title: 'Task 1' , description: 'Task 1 description', task_status_id: 1, status:'in progress', code: '#erf443e'},
-      { id: 2, title: 'Task 2' , description: 'Task 2 description', task_status_id: 2, status:'pending', code: '#er43e'},
-    ];
+    const mockTasks: Task[] = [
+      {
+        id: 1,
+        title: 'Task 1',
+        description: 'Task 1 description',
+        task_status_id: 1,
+        status: 'in progress',
+        code: '#erf443e',
+      },
+      {
+        id: 2,
+        title: 'Task 2',
+        description: 'Task 2 description',
+        task_status_id: 2,
+        status: 'pending',
+        code: '#er43e',
+      },
+    ]
 
-    (axios.get as Mock).mockResolvedValueOnce({
+    ;(axios.get as Mock).mockResolvedValueOnce({
       data: { data: mockTasks },
     })
 
@@ -28,10 +42,19 @@ describe('Test task service composable', () => {
   })
 
   it('createTask sends correct data and returns response', async () => {
-    const task: TaskFormData = { title: 'New Task' , description: 'New task description', task_status_id: null}
-    const mockResponse:Task = { id:1, title: 'New Task' , description: 'New task description', task_status_id: null};
+    const task: TaskFormData = {
+      title: 'New Task',
+      description: 'New task description',
+      task_status_id: null,
+    }
+    const mockResponse: Task = {
+      id: 1,
+      title: 'New Task',
+      description: 'New task description',
+      task_status_id: null,
+    }
 
-    (axios.post as Mock).mockResolvedValueOnce({
+    ;(axios.post as Mock).mockResolvedValueOnce({
       data: mockResponse,
     })
 
@@ -43,9 +66,9 @@ describe('Test task service composable', () => {
   })
 
   it('getTaskById fetches task by ID', async () => {
-    const mockTask = { id: 1 };
+    const mockTask = { id: 1 }
 
-    (axios.get as Mock).mockResolvedValueOnce({
+    ;(axios.get as Mock).mockResolvedValueOnce({
       data: { data: mockTask },
     })
 
@@ -57,10 +80,15 @@ describe('Test task service composable', () => {
   })
 
   it('updateTaskById sends updated task and returns response', async () => {
-    const task: TaskFormData = { id: 1, title: 'Updated Task', task_status_id: undefined, description: '' }
-    const mockUpdated = { message: 'Task updated successfully' };
+    const task: TaskFormData = {
+      id: 1,
+      title: 'Updated Task',
+      task_status_id: undefined,
+      description: '',
+    }
+    const mockUpdated = { message: 'Task updated successfully' }
 
-    (axios.put as Mock).mockResolvedValueOnce({
+    ;(axios.put as Mock).mockResolvedValueOnce({
       data: { data: mockUpdated },
     })
 
@@ -72,7 +100,7 @@ describe('Test task service composable', () => {
   })
 
   it('deleteTaskById calls delete with correct ID', async () => {
-    (axios.delete as Mock).mockResolvedValueOnce({})
+    ;(axios.delete as Mock).mockResolvedValueOnce({})
 
     const { deleteTaskById } = useTask()
     await deleteTaskById(5)

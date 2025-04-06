@@ -5,14 +5,11 @@ import IconSpinner from '@/components/IconSpinner.vue'
 
 describe('Test Icon spinner component', () => {
   it('renders properly', () => {
-    const wrapper = mount(
-      IconSpinner,
-      {
-        slots:{
-          default: 'Submit'
-        }
-      }
-    )
+    const wrapper = mount(IconSpinner, {
+      slots: {
+        default: 'Submit',
+      },
+    })
     expect(wrapper.text()).toContain('Submit')
   })
 })

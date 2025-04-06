@@ -7,7 +7,6 @@ import useUtility from '@/composables/utility.ts'
 import useNotification from '@/composables/notification.ts'
 import { useRouter } from 'vue-router'
 
-
 const taskStore = useTaskStore()
 const statusStore = useStatusStore()
 const { formatStatus } = useUtility()

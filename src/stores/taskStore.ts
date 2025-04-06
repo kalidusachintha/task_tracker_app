@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Task, TaskFormData } from '@/types/Task.ts'
-import { useRouter } from 'vue-router'
 import useTask from '@/composables/services/TaskService.ts'
-import useNotification from '@/composables/notification.ts'
 export const useTaskStore = defineStore('taskStore', () => {
   const tasks = ref<Task[]>([])
   const errors = ref({})
@@ -15,9 +13,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     task_status_id: null,
   })
 
-  const router = useRouter()
   const { getTasks, createTask, getTaskById, updateTaskById, deleteTaskById } = useTask()
-  const { confirm, success, error } = useNotification()
 
   const resetForm = () => {
     form.value.title = ''
@@ -32,8 +28,9 @@ export const useTaskStore = defineStore('taskStore', () => {
     loading.value = true
     try {
       tasks.value = await getTasks()
+      return true
     } catch (exception: any) {
-      error('Oops!', 'There was something issue')
+      return false
     } finally {
       loading.value = false
     }
@@ -48,12 +45,11 @@ export const useTaskStore = defineStore('taskStore', () => {
     try {
       await createTask(form.value)
       await fetchTasks()
-      router.push({ name: 'task.list' })
-      success('Task saved successfully')
+      return true
     } catch (exception: any) {
       if (exception?.response.status === 422) {
         errors.value = exception.response.data.errors
-        error('Oops!', 'There was something issue')
+        return false
       }
     } finally {
       loading.value = false
@@ -68,8 +64,9 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     try {
       form.value = await getTaskById(id)
+      return true
     } catch (exception: any) {
-      error('Oops!', 'There was something issue')
+      return false
     } finally {
       loading.value = false
     }
@@ -84,38 +81,29 @@ export const useTaskStore = defineStore('taskStore', () => {
     try {
       await updateTaskById(form.value)
       await fetchTasks()
-      router.push({ name: 'task.list' })
-      success('Task updated successfully')
+      return true
     } catch (exception: any) {
       if (exception?.response.status === 422) {
         errors.value = exception.response.data.errors
-        error('Oops!', 'There was something issue')
+        return false
       }
     } finally {
       loading.value = false
     }
   }
   const deleteTask = async (id: number) => {
-    confirm({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this action!",
-      icon: 'warning',
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        if (loading.value) return
+    if (loading.value) return
 
-        deletingItem.value = id
-        try {
-          await deleteTaskById(id)
-          await fetchTasks()
-          success('Task deleted successfully')
-        } catch (exception: any) {
-          error('Oops!', 'There was something issue')
-        } finally {
-          deletingItem.value = 0
-        }
-      }
-    })
+    deletingItem.value = id
+    try {
+      await deleteTaskById(id)
+      await fetchTasks()
+      return true
+    } catch (exception: any) {
+      return false
+    } finally {
+      deletingItem.value = 0
+    }
   }
 
   return {

@@ -3,14 +3,30 @@ import { useTaskStore } from '@/stores/taskStore.ts'
 import type { Task } from '@/types/Task.ts'
 import IconSpinner from '@/components/IconSpinner.vue'
 import useUtility from '@/composables/utility.ts'
+import useNotification from '@/composables/notification.ts'
 
 const taskStore = useTaskStore()
 const { formatStatus } = useUtility()
+const { confirm, success, error } = useNotification()
 
 const props = defineProps<{ task: Task; isDeleting: boolean }>()
 
-const deleteTask = () => {
-  taskStore.deleteTask(props.task.id)
+const handleDelete = async () => {
+  confirm({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this action!",
+    icon: 'warning',
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const result = await taskStore.deleteTask(props.task.id)
+      if (result) {
+        success('Task deleted successfully')
+      } else {
+        error('Oops!', 'There was something issue')
+      }
+    }
+  })
+
 }
 </script>
 
@@ -52,7 +68,7 @@ const deleteTask = () => {
           </svg>
         </router-link>
       </div>
-      <button @click="deleteTask" class="p-2 text-red-600 hover:text-red-800 transition-colors">
+      <button @click="handleDelete" class="p-2 text-red-600 hover:text-red-800 transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"

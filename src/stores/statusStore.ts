@@ -10,8 +10,9 @@ export const useStatusStore = defineStore('statusStore', () => {
   const getAllStatuses = async () => {
     try {
       statuses.value = await getAll()
+      return true
     } catch (error) {
-      console.log(error)
+      return false
     }
   }
 

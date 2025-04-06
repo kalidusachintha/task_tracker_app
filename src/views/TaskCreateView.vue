@@ -4,14 +4,30 @@ import { useStatusStore } from '@/stores/statusStore.ts'
 import { onMounted, onUnmounted } from 'vue'
 import ButtonUtility from '@/components/ButtonUtility.vue'
 import useUtility from '@/composables/utility.ts'
+import useNotification from '@/composables/notification.ts'
+import { useRouter } from 'vue-router'
+
 
 const taskStore = useTaskStore()
 const statusStore = useStatusStore()
 const { formatStatus } = useUtility()
+const { success, error } = useNotification()
+const router = useRouter()
 
 onMounted(() => {
   statusStore.getAllStatuses()
 })
+
+const handleAdd = async () => {
+  const result = await taskStore.addTask()
+
+  if (result) {
+    router.push({ name: 'task.list' })
+    success('Task saved successfully')
+  } else {
+    error('Oops!', 'Something went wrong')
+  }
+}
 
 onUnmounted(() => {
   taskStore.resetForm()
@@ -21,7 +37,7 @@ onUnmounted(() => {
 <template>
   <h1 class="text-3xl font-bold text-gray-800 mb-6">Add Task</h1>
   <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
-    <form @submit.prevent="taskStore.addTask" novalidate class="space-y-4">
+    <form @submit.prevent="handleAdd" novalidate class="space-y-4">
       <div>
         <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
         <input

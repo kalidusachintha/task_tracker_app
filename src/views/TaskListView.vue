@@ -3,11 +3,17 @@ import { onMounted } from 'vue'
 import { useTaskStore } from '@/stores/taskStore.ts'
 import TaskItemView from '@/views/TaskItemView.vue'
 import IconSpinner from '@/components/IconSpinner.vue'
+import useNotification from '@/composables/notification.ts'
 
 const taskStore = useTaskStore()
+const { error } = useNotification()
 
-onMounted(() => {
-  taskStore.fetchTasks()
+onMounted(async () => {
+  const result = await taskStore.fetchTasks()
+
+  if (!result) {
+    error('Oops!', 'Something went wrong getting all your tasks')
+  }
 })
 </script>
 

@@ -5,16 +5,35 @@ import { onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ButtonUtility from '@/components/ButtonUtility.vue'
 import useUtility from '@/composables/utility.ts'
+import useNotification from '@/composables/notification.ts'
+import { useRouter } from 'vue-router'
 
 const route = useRoute()
 const taskStore = useTaskStore()
 const statusStore = useStatusStore()
 const { formatStatus } = useUtility()
+const { success, error } = useNotification()
+const router = useRouter()
 
-onMounted(() => {
-  taskStore.getTask(+route.params.id)
-  statusStore.getAllStatuses()
+onMounted(async () => {
+  const result = await taskStore.getTask(+route.params.id)
+  await statusStore.getAllStatuses()
+
+  if (!result) {
+    error('Oops!', 'Something went wrong with getting task info')
+  }
 })
+
+const handleUpdate = async () => {
+  const result = await taskStore.updateTask()
+
+  if (result) {
+    router.push({ name: 'task.list' })
+    success('Task updated successfully')
+  } else {
+    error('Oops!', 'Something went wrong with updating the task')
+  }
+}
 
 onUnmounted(() => {
   taskStore.resetForm()
@@ -24,7 +43,7 @@ onUnmounted(() => {
 <template>
   <h1 class="text-3xl font-bold text-gray-800 mb-6">Update Task - {{ taskStore.form.title }}</h1>
   <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
-    <form @submit.prevent="taskStore.updateTask" novalidate class="space-y-4">
+    <form @submit.prevent="handleUpdate" novalidate class="space-y-4">
       <div>
         <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
         <input

@@ -13,5 +13,8 @@
   ],
   "compilerOptions": {
     "module": "NodeNext"
-  }
+  },
+  "types": [
+    "vue-sweetalert2"
+  ],
 }

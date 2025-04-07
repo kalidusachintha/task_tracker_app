@@ -120,7 +120,27 @@ This document outlines the development approach for a Task Tracker App built wit
 
 ## 7. Project setup instructions
 
+### 7.1 Prerequisites
+
+- Node.js (v20.0.0 or higher)
+- npm (v11.0.0 or higher)
+
+### 7.2 Installation Steps
+
 - Clone the project using `git clone` command
+````
+git clone https://github.com/kalidusachintha/task_tracker_app.git
+cd task_tracker_app
+````
 - Rename `.env.example` to `.env`
-- Add the backend URL to `VITE_API_URL`
+- Add the API URL to `VITE_API_URL`
 - Run `npm install` and `npm run dev`
+
+### 7.3 Issues and troubleshooting
+
+- If you encounter CORS errors, make sure your backend allows requests from your frontend URL
+- Verify that your API URL is correct and includes protocol
+
+### 7.4 Additional Commands
+
+- Run tests `npm run test:unit`

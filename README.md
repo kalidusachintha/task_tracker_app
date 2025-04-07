@@ -98,6 +98,7 @@ This document outlines the development approach for a Task Tracker App built wit
 - Reusable UI elements with Slots
 - Composition API for complex component logic
 - Composable functions for sharing reusable logics
+- Route level code-splitting
 
 ## 6. Future Roadmap Considerations
 

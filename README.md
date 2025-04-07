@@ -117,3 +117,10 @@ This document outlines the development approach for a Task Tracker App built wit
 - Implement caching strategy for improved performance
 - Enhance accessibility features
 - Use external services for error or bug tracking
+
+## 7. Project setup instructions
+
+- Clone the project using `git clone` command
+- Rename `.env.example` to `.env`
+- Add the backend URL to `VITE_API_URL`
+- Run `npm install` and `npm run dev`

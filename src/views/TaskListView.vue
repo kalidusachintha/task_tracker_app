@@ -19,8 +19,8 @@ onMounted(async () => {
 
 <template>
   <div class="task-list">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl font-semibold text-gray-800">Your Tasks</h2>
+    <div class="flex justify-center items-center mb-6">
+      <h2 class="text-xl font-semibold text-amber-100">Your Tasks</h2>
     </div>
     <div class="bg-white rounded-xl shadow-md overflow-hidden">
       <div

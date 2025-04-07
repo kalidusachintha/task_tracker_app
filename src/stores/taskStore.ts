@@ -30,6 +30,7 @@ export const useTaskStore = defineStore('taskStore', () => {
       tasks.value = await getTasks()
       return true
     } catch (exception: any) {
+      console.log(exception)
       return false
     } finally {
       loading.value = false
@@ -66,6 +67,7 @@ export const useTaskStore = defineStore('taskStore', () => {
       form.value = await getTaskById(id)
       return true
     } catch (exception: any) {
+      console.log(exception)
       return false
     } finally {
       loading.value = false
@@ -100,6 +102,7 @@ export const useTaskStore = defineStore('taskStore', () => {
       await fetchTasks()
       return true
     } catch (exception: any) {
+      console.log(exception)
       return false
     } finally {
       deletingItem.value = 0

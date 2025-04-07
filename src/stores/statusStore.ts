@@ -11,7 +11,8 @@ export const useStatusStore = defineStore('statusStore', () => {
     try {
       statuses.value = await getAll()
       return true
-    } catch (error) {
+    } catch (exception) {
+      console.log(exception)
       return false
     }
   }

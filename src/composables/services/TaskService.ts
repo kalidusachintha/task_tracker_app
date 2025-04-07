@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { TaskFormData } from '@/types/Task.ts'
 
-const API_URL = 'tasks'
+const API_URL = import.meta.env.VITE_API_TASK_URL
 
 export default function useTask() {
   const getTasks = async () => {
